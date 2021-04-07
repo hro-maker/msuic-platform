@@ -27,4 +27,4 @@ export class Track {
   coments: Comment[];
 }
 
-export const CatSchema = SchemaFactory.createForClass(Track);
+export const TrackSchema = SchemaFactory.createForClass(Track);
