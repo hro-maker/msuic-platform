@@ -1,6 +1,6 @@
 import { CreateTrackDto } from './dto/create-track-dto';
 import { Trackservis } from './track.servis';
-import { Body, Controller, Delete, Get, Param, Post, UploadedFiles, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Query, UploadedFiles, UseInterceptors } from "@nestjs/common";
 import { ObjectId } from 'mongoose';
 import { CreateComentDto } from './dto/Coment-coment-dto';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
@@ -9,8 +9,10 @@ import { FileFieldsInterceptor } from '@nestjs/platform-express';
 export class trackController{
     constructor(private trackServise:Trackservis){}
     @Get()
-     getAll(){
-            return this.trackServise.getAll()
+     getAll(@Query('count')count:number,
+            @Query('offset')offset
+        ){
+            return this.trackServise.getAll(count,offset)
     }
     @Post()
     @UseInterceptors(FileFieldsInterceptor([
@@ -25,6 +27,10 @@ export class trackController{
      getOne(@Param('id') id:ObjectId){
                 return this.trackServise.getOne(id)
     }
+    // @Get()
+    //  search(@Param('query') query:string){
+    //             return this.trackServise.search(query)
+    // }
     @Delete(':id')
      Delete(@Param('id') id:ObjectId){
             return this.trackServise.Delete(id)
@@ -32,5 +38,9 @@ export class trackController{
     @Post('/comment')
     addcomment(@Body()dto:CreateComentDto){
         return this.trackServise.Addcomment(dto)
+    }
+    @Post('/tracks/:id')
+    listen(@Param('id')id:ObjectId){
+            return this.trackServise.listen(id)
     }
 }
