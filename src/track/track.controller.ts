@@ -18,7 +18,7 @@ export class trackController{
      getOne(@Param('id') id:ObjectId){
                 return this.trackServise.getOne(id)
     }
-    @Delete('id')
+    @Delete(':id')
      Delete(@Param('id') id:ObjectId){
             return this.trackServise.Delete(id)
     }
