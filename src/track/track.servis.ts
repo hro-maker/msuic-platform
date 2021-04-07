@@ -23,7 +23,8 @@ export class Trackservis{
         const track=await  this.TrackModel.findById(id)
             return track
     }
-    async Delete(){
-        
+    async Delete(id:ObjectId):Promise<ObjectId>{
+            const track=await this.TrackModel.findByIdAndDelete(id)
+            return track._id
     }
 }
