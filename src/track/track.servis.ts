@@ -8,9 +8,6 @@ import { Model, ObjectId } from 'mongoose';
 import { CreateComentDto } from './dto/Coment-coment-dto';
 @Injectable()
 export class Trackservis{
-//    async search(query: string):Promise<Track[]> {
-                
-//     }
     constructor(@InjectModel(Track.name) private TrackModel: Model<TrackDocument>,
     @InjectModel(Comment.name) private ComentModel: Model<ComentDocument>,
     private fileservise:FileServise
@@ -19,6 +16,14 @@ export class Trackservis{
             const tracks=await  this.TrackModel.find().skip(Number(offset)).limit(Number(count))
             return tracks
     }
+    async search(query: string):Promise<Track[]> {
+       
+        const tracks =await  this.TrackModel.find({
+                text:{$regex: new RegExp(query,'i')}
+        })   
+       
+        return tracks
+}
     async create(dto: CreateTrackDto,picture,audio):Promise<Track>{
             const audiopath=this.fileservise.create(FileType.AUDIO,audio)
             const picturepath=this.fileservise.create(FileType.IMAGE,picture)

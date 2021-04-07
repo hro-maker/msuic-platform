@@ -23,14 +23,15 @@ export class trackController{
          const {picture,audio}=files
                 return this.trackServise.create(dto,picture[0],audio[0])
     }
+    @Get('/search')
+    search(@Query('query') query:string){
+               return this.trackServise.search(query)
+   }
     @Get(':id')
      getOne(@Param('id') id:ObjectId){
                 return this.trackServise.getOne(id)
     }
-    // @Get()
-    //  search(@Param('query') query:string){
-    //             return this.trackServise.search(query)
-    // }
+   
     @Delete(':id')
      Delete(@Param('id') id:ObjectId){
             return this.trackServise.Delete(id)
@@ -38,7 +39,7 @@ export class trackController{
     @Post('/comment')
     addcomment(@Body()dto:CreateComentDto){
         return this.trackServise.Addcomment(dto)
-    }
+    } 
     @Post('/tracks/:id')
     listen(@Param('id')id:ObjectId){
             return this.trackServise.listen(id)
